@@ -18,9 +18,11 @@
 
 - **db.js**  
   Establishes a connection to the MySQL database.
--**test-api.http**
+  
+- **test-api.http**
   Verifies Backend to an extent.
--**REST Client_response**
+  
+- **REST Client_response**
   Output of REST Client for the input in test-api.http file.
 
 ---
