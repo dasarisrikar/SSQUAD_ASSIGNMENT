@@ -15,18 +15,20 @@ const getPlans = (req, res) => {
 
 // Create a new plan
 const createPlan = (req, res) => {
-    const { title, location, time, creator_id, max_participants, visibility } = req.body;//Let the frontend send the req
+    const { name, description, time, creator_id, max_participants, visibility } = req.body;
 
     planModel.addPlan(
-        { title, location, time, creator_id, max_participants, visibility },
+        { name, description, time, creator_id, max_participants, visibility },
         (err, result) => {
             if (err) {
-                console.error('Error creating plan:', err.message);
+                console.error('Error creating plan:', err); // Log full error for debugging
                 return res.status(500).send('Server error');
             }
             res.status(201).send('Plan created successfully');
         }
     );
 };
+
+
 
 module.exports = { getPlans, createPlan };
