@@ -2,6 +2,8 @@
 
 ## Structure of Assignment
 
+**The provided code handles backend briefly based on frontend.I have used REST Client in VS code to verify Backend instead of Postman**
+
 - **app.js**  
   Main entry point for the application.
 
@@ -16,6 +18,10 @@
 
 - **db.js**  
   Establishes a connection to the MySQL database.
+-**test-api.http**
+  Verifies Backend to an extent.
+-**REST Client_response**
+  Output of REST Client for the input in test-api.http file.
 
 ---
 
