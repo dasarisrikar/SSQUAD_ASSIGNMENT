@@ -1,32 +1,48 @@
-const planModel = require('../models/planModel');
+const db = require('../db');
 
 // Fetch plans with sorting and filtering
-const getPlans = (req, res) => {
-    const { sort, filter } = req.query;//Let the frontend send the req
+const fetchPlans = (userId, sort, filter, callback) => {
+    let query = '';
+    //? is nothing but we should input it frontend should...
+    if (filter === 'Friends') {
+        // Query plans visible to friends of the user
+        query = `
+            SELECT p.*
+            FROM plans p
+            INNER JOIN friends f ON p.user_id = f.friend_id
+            WHERE f.user_id = ?
+        `;
+    } else if (filter === 'FriendsOfFriends') {
+        // Query plans visible to friends-of-friends of the user
+        query = `
+            SELECT p.*
+            FROM plans p
+            INNER JOIN friends f1 ON p.user_id = f1.friend_id
+            INNER JOIN friends f2 ON f1.user_id = f2.friend_id
+            WHERE f2.user_id = ?
+        `;
+    } else {
+        // No specific filter; fetch all plans
+        query = 'SELECT * FROM plans';
+    }
+    if (sort === 'postedTime') {
+        query += ' ORDER BY created_at DESC';
+    } else if (sort === 'plannedTime') {
+        query += ' ORDER BY time ASC';
+    }
 
-    planModel.fetchPlans(sort, filter, (err, results) => {
-        if (err) {
-            console.error('Error fetching plans:', err.message);
-            return res.status(500).send('Server error');
-        }
-        res.json(results);
-    });
+    db.query(query, callback);
 };
 
-// Create a new plan
-const createPlan = (req, res) => {
-    const { title, location, time, creator_id, max_participants, visibility } = req.body;//Let the frontend send the req
+// Add a new plan
+const addPlan = (plans, callback) => {
+    const query = `
+        INSERT INTO plans (name, description, time, creator_id, max_participants, visibility)
+        VALUES ('${plans.name}', '${plans.description}', '${plans.time}', ${plans.creator_id}, ${plans.max_participants}, '${plans.visibility}')
+    `;
 
-    planModel.addPlan(
-        { title, location, time, creator_id, max_participants, visibility },
-        (err, result) => {
-            if (err) {
-                console.error('Error creating plan:', err.message);
-                return res.status(500).send('Server error');
-            }
-            res.status(201).send('Plan created successfully');
-        }
-    );
+    db.query(query, callback);
 };
 
-module.exports = { getPlans, createPlan };
+
+module.exports = { fetchPlans, addPlan };
