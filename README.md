@@ -1,18 +1,40 @@
 # SSQUAD_ASSIGNMENT
 
-structure of assignment
--app.js //main entry point for application
--routes/plans.js //Routes for plans
--controllers/plansController.js //Logic for handling plans
--models/planModel.js //Plan related database queries
--db.js //establishing connection to mySQL database
+## Structure of Assignment
 
-The provided files will briefly handles the situation based on some assumptions on Frontend.
+- **app.js**  
+  Main entry point for the application.
 
-app.js->It starts backend server at 3000 and backend at 3000/plans using routes/plans.js file.
+- **routes/plans.js**  
+  Routes for managing plans.
 
-routes/plans.js->It will decide whether the code uses a GET request to fetch plans or POST request to craete a new plan using controllers/plansController.js file.
+- **controllers/plansController.js**  
+  Logic for handling plans.
 
-controllers/plansController.js->It handles database queries from frontend inputs using models/planModel.js file.
+- **models/planModel.js**  
+  Plan-related database queries.
 
-models/planModels.js->This file is the actual one which handles the database queries.The functions created in this file is used by controllers/plansController.js to handle the Frontend.
+- **db.js**  
+  Establishes a connection to the MySQL database.
+
+---
+
+### Description of File Roles:
+
+- **app.js**  
+  - Starts the backend server on port `3000`.  
+  - It uses the `routes/plans.js` file to route requests to `/plans`.
+
+- **routes/plans.js**  
+  - Determines whether the request is a `GET` or `POST` request.  
+  - A `GET` request fetches plans, while a `POST` request creates a new plan.  
+  - It forwards the appropriate request to `controllers/plansController.js`.
+
+- **controllers/plansController.js**  
+  - Handles database queries based on the inputs from the frontend.  
+  - It interacts with `models/planModel.js` to execute these queries.
+
+- **models/planModel.js**  
+  - This file directly handles the database queries.  
+  - The functions in this file are used by `controllers/plansController.js` to communicate with the database.
+
