@@ -1,0 +1,11 @@
+POST http://localhost:3000/plans
+Content-Type: application/json
+
+{
+  "name": "Plan A",
+  "description": "This is a description of Plan A",
+  "time": "2024-11-22 10:00:00",
+  "creator_id": 1,
+  "max_participants": 10,
+  "visibility": "Public"
+}
